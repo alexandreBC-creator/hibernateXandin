@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cadastro de Vendas por Grupo</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+		  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Mini ERP Cadastrou Visualizou</a>
+		  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <ul class="navbar-nav px-3">
+		    <li class="nav-item text-nowrap">
+		    </li>
+		  </ul>
+		</nav>
+		<div class = "container-fluid">
+			<div class = "row">
+				<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse" style = "height: 100vh;">
+					<div class="sidebar-sticky pt-3">
+						 <ul class="nav flex-column">
+						 	<li class = "nav-item">
+						 	 <a class="nav-link active" href="./index.html">
+						 		<i class="fa fa-home" aria-hidden="true">
+						 			Tela Inicial
+						 		</i>
+						 	</a>
+						 	
+						 	</li>
+						 	 <li class="nav-item">
+						 	 	 <a class="nav-link active" href="./cadPessoas.html">
+							 	 	 <i class="fa fa-user" aria-hidden="true">
+							 	 	 	Cadastrar Pessoas
+							 	 	 </i>
+						 	 	 </a>
+						 	 </li>
+						 	<li class = "nav-item">
+						 	  	<a class="nav-link active" href="./getPessoas.html	">
+							 	 	 <i class="fa fa-users" aria-hidden="true">
+							 	 	 	Listar Pessoas
+							 	 	 </i>
+						 	 	</a>
+						 	 </li>
+						 	 <li class = "nav-item">
+						 	  	<a class="nav-link active" href="./cadProdutos.html	">
+							 	 	 <i class="fa fa-shopping-cart" aria-hidden="true">
+							 	 	 	Cadastrar Produtos
+							 	 	 </i>
+						 	 	</a>
+						 	 </li>
+						 	 						 	  <li class = "nav-item">
+						 	  	<a class="nav-link active" href="./getProdutos.html	">
+							 	 	 <i class="fa fa-shopping-cart" aria-hidden="true">
+							 	 	 	Ver Produtos
+							 	 	 </i>
+						 	 	</a>
+						 	 </li>
+						 	 	 </li>
+						 	 	<li class = "nav-item">
+						 	  	<a class="nav-link active" href="./cadVendas.html	">
+							 	 	 <i class="fa fa-shopping-cart" aria-hidden="true">
+							 	 	 	Vender
+							 	 	 </i>
+						 	 	</a>
+						 	 </li>
+						 	 	<li class = "nav-item">
+						 	  		<a class="nav-link active" href="./relatorios.html	">
+							 	 	 	 <i class="fa fa-file" aria-hidden="true"></i>
+							 	 	 	Relatórios
+							 	 	 </i>
+						 	 	</a>
+						 	 </li>
+						 
+						 </ul>
+					</div>
+				</nav>
+				<main role="main">
+	<div class="container" style="margin-top: 10px">
+		<div class="row">
+	  		<div class="col"><h1>Relatório de Vendas por Grupo</h1></div>
+	  	</div>
+		<div id="resposta"></div>
+		<a style="width: 100px;"href="./relatorios.html" class="btn btn-primary btn-lg active center" role="button" >Voltar</a>
+	</div>
+	</main>
+	<script type="text/javascript">
+	
+		function listar() {
+			document.getElementById("resposta").innerHTML = "aguarde, carregando...";
+		
+			var oReq = new XMLHttpRequest();
+			oReq.onload = function(e) {
+			  var dados = oReq.response; // not responseText
+			  
+			  
+			  var tab = "<table class='table table-dark'>";
+			    tab += "<thead class='thead-dark'>";
+				tab += "<th>Grupo</th>";
+				tab += "<th>Quantidade</th>";
+				tab += "<th>Valor Total</th>";
+				tab += "</thead>";
+				
+				for (var i in dados) {
+					console.log(i);
+					console.log(dados[i]);
+					tab += "<tr>";
+					tab += "<td>" + dados[i].grupo + "</td>";
+					tab += "<td>" + dados[i].quantidade + "</td>";
+					tab += "<td>" + dados[i].valortotal + "</td>";
+					tab += "</tr>";
+				}
+				
+				tab += "</table>";
+				
+				document.getElementById("resposta").innerHTML = tab;
+				
+			  
+			}
+			oReq.open("POST", "Controller?m=ListarVendasPorGrupo");
+			oReq.responseType = "json";
+			oReq.send();
+		}
+		listar();
+			
+	</script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	
+</body>
+</html>
